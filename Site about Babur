@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бабур: Жизнь, Наследие и Путь</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        body { font-family: 'Montserrat', sans-serif; background-color: #fdfcf7; scroll-behavior: smooth; color: #1a1a1a; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1581012771300-224937651c42?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+
+        /* Интерактивная карта */
+        .map-container {
+            background: #f3f0e7;
+            border: 3px solid #d4af37;
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            box-shadow: inset 0 0 50px rgba(212, 175, 55, 0.1);
+        }
+        .map-point {
+            fill: #d4af37;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            stroke: white;
+            stroke-width: 3px;
+        }
+        .map-point:hover {
+            fill: #92400e;
+            r: 20; /* Большой размер для удобства */
+            stroke: #fcd34d;
+        }
+        .map-line {
+            stroke: #d4af37;
+            stroke-width: 3;
+            stroke-dasharray: 8;
+            animation: dash 15s linear infinite;
+            opacity: 0.6;
+        }
+        @keyframes dash { to { stroke-dashoffset: -160; } }
+
+        .info-card {
+            display: none;
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 500px;
+            z-index: 20;
+            border-top: 4px solid #d4af37;
+        }
+
+        .childhood-bg {
+            background-color: #f9f5eb;
+            border-left: 8px solid #d4af37;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навигация -->
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-amber-100 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <span class="text-2xl font-bold text-amber-900 italic">Z.M. BABUR</span>
+            <div class="hidden md:flex space-x-8 text-xs uppercase font-bold tracking-widest text-stone-600">
+                <a href="#childhood" class="hover:text-amber-600 transition">Детство</a>
+                <a href="#biography" class="hover:text-amber-600 transition">Путь</a>
+                <a href="#map-section" class="hover:text-amber-600 transition">Карта</a>
+                <a href="#poetry" class="hover:text-amber-600 transition">Поэзия</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="h-[70vh] flex items-center justify-center text-center text-white hero-bg">
+        <div data-aos="fade-up" class="px-4">
+            <h1 class="text-6xl md:text-8xl font-bold mb-4">Бабур</h1>
+            <p class="text-xl md:text-2xl text-amber-300 italic">1483 – 1530</p>
+            <p class="mt-4 uppercase tracking-[0.4em] text-sm opacity-80">Поэт. Правитель. Человек.</p>
+        </div>
+    </header>
+
+    <!-- Секция: Детство и Семья -->
+    <section id="childhood" class="py-24 container mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div data-aos="fade-right">
+                <h2 class="text-4xl font-bold text-stone-900 mb-6">Истоки: Семья и Ранние Годы</h2>
+                <div class="childhood-bg p-8 mb-6">
+                    <p class="mb-4"><strong>Дата рождения:</strong> 14 февраля 1483 г.</p>
+                    <p class="mb-4"><strong>Место рождения:</strong> Андижан, Ферганская долина.</p>
+                    <p class="mb-4"><strong>Отец:</strong> Умар-Шейх Мирзо (правитель Ферганы, потомок Амира Темура в 4-м поколении).</p>
+                    <p><strong>Мать:</strong> Кутлуг-Нигор Ханум (дочь правителя Моголистана Юнус-хана, потомок Чингисхана).</p>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Бабур вырос в атмосфере высокой культуры и рыцарства. Его детство прошло в живописном Андижане, который он позже с любовью описывал в своих мемуарах как край «изобилия плодов и дичи».
+                </p>
+            </div>
+            <div data-aos="fade-left" class="bg-white p-10 border border-amber-100 shadow-sm rounded-2xl">
+                <h3 class="text-2xl font-bold text-amber-800 mb-4">Чем увлекался в детстве?</h3>
+                <ul class="space-y-4 text-gray-700">
+                    <li class="flex gap-3">
+                        <span class="text-amber-500 font-bold">01.</span>
+                        <span><strong>Литература:</strong> С ранних лет изучал фарси и тюрки, зачитываясь Шахнаме и поэзией Навои.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-amber-500 font-bold">02.</span>
+                        <span><strong>Охота и верховая езда:</strong> Был великолепным наездником, считая охоту лучшим упражнением для воина.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-amber-500 font-bold">03.</span>
+                        <span><strong>Садоводство:</strong> Уже в юности проявлял интерес к флоре, участвуя в планировке отцовских садов.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-amber-500 font-bold">04.</span>
+                        <span><strong>Каллиграфия:</strong> Упорно тренировал почерк, что позже привело его к созданию собственного алфавита.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подробная Биография -->
+    <section id="biography" class="py-24 bg-stone-50">
+        <div class="container mx-auto px-6 text-center mb-16" data-aos="fade-up">
+            <h2 class="text-5xl font-bold text-stone-900 mb-6">Путь Правителя</h2>
+            <div class="w-24 h-1 bg-amber-500 mx-auto"></div>
+        </div>
+        <div class="max-w-4xl mx-auto space-y-8" data-aos="fade-up">
+            <p class="text-lg text-gray-700 text-center">
+                В 1494 году, когда Бабуру было всего 12 лет, его отец погиб при несчастном случае. Мальчик внезапно стал правителем Ферганы. Его юность прошла в бесконечных войнах за Самарканд — столицу его великого предка. Трижды он брал этот город и трижды терял его, пока судьба не увела его на юг.
+            </p>
+        </div>
+    </section>
+
+    <!-- Интерактивная Карта -->
+    <section id="map-section" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold text-stone-900 mb-4">Карта Походов</h2>
+                <p class="text-amber-700 font-bold uppercase tracking-widest italic">Нажмите на крупные точки для подробностей</p>
+            </div>
+            
+            <div class="map-container h-[600px] w-full relative shadow-2xl">
+                <svg viewBox="0 0 800 550" class="w-full h-full" preserveAspectRatio="xMidYMid meet">
+                    <!-- Путь -->
+                    <path d="M150 150 L250 180 L350 320 L550 420" class="map-line fill-none" />
+                    
+                    <!-- Крупные точки -->
+                    <circle cx="150" cy="150" r="16" class="map-point" onclick="showMapInfo('Андижан', 'Место жительства (1483-1494). Столица Ферганы, где Бабур провел детство, обучаясь искусству правления и поэзии.')" />
+                    <text x="130" y="120" fill="#92400e" font-weight="bold" font-size="14">Андижан</text>
+
+                    <circle cx="250" cy="180" r="16" class="map-point" onclick="showMapInfo('Самарканд', 'Место битв (1497-1511). Город, который Бабур считал своим по праву рождения. Здесь он впервые познал сладость побед и горечь изгнания.')" />
+                    <text x="230" y="150" fill="#92400e" font-weight="bold" font-size="14">Самарканд</text>
+
+                    <circle cx="350" cy="320" r="16" class="map-point" onclick="showMapInfo('Кабул', 'Новый дом (1504-1526). После долгих скитаний Бабур обосновался здесь. В Кабуле он провел большую часть взрослой жизни.')" />
+                    <text x="330" y="290" fill="#92400e" font-weight="bold" font-size="14">Кабул</text>
+
+                    <circle cx="550" cy="420" r="20" class="map-point" onclick="showMapInfo('Агра (Индия)', 'Основание империи (1526). После победы в битве при Панипате Бабур перенес столицу в Агру, объединив земли Индии и Средней Азии.')" />
+                    <text x="530" y="390" fill="#92400e" font-weight="bold" font-size="16">Агра</text>
+                </svg>
+
+                <div id="map-info-card" class="info-card">
+                    <h3 id="map-title" class="font-bold text-2xl text-amber-900 mb-3 border-b pb-2"></h3>
+                    <p id="map-desc" class="text-stone-700 leading-relaxed"></p>
+                    <button onclick="closeMapInfo()" class="mt-4 px-6 py-2 bg-stone-800 text-white rounded-full text-xs font-bold uppercase">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Поэзия -->
+    <section id="poetry" class="py-24 bg-stone-50">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-12 text-stone-900">Поэтическая Мудрость</h2>
+            <div class="max-w-3xl mx-auto bg-white p-16 rounded-[3rem] border border-amber-100 shadow-xl relative">
+                <div id="rubai-display" class="min-h-[140px] flex items-center justify-center transition-opacity duration-500">
+                    <p id="rubai-text" class="text-2xl md:text-3xl font-serif text-stone-800 italic leading-snug">
+                        Кто предан был, того не предавай,<br>Кто в бедах верным был, не забывай.
+                    </p>
+                </div>
+                <button onclick="changeRubai()" class="mt-10 bg-amber-700 text-white px-12 py-4 rounded-full hover:bg-amber-800 transition-all font-bold uppercase tracking-widest text-sm">
+                    Сменить рубаи
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-stone-900 py-12 text-center text-stone-500">
+        <p class="uppercase tracking-widest text-xs mb-4">Жизнь и Судьба Бабура (1483 – 1530)</p>
+        <div class="h-px w-20 bg-stone-700 mx-auto"></div>
+    </footer>
+
+    <script>
+        AOS.init({ duration: 1200, once: true });
+
+        function showMapInfo(title, desc) {
+            const card = document.getElementById('map-info-card');
+            document.getElementById('map-title').innerText = title;
+            document.getElementById('map-desc').innerText = desc;
+            card.style.display = 'block';
+            card.className = 'info-card block animate-in slide-in-from-bottom-4 duration-300';
+        }
+
+        function closeMapInfo() {
+            document.getElementById('map-info-card').style.display = 'none';
+        }
+
+        const rubais = [
+            "Кто предан был, того не предавай,<br>Кто в бедах верным был, не забывай.",
+            "Чужбина — клетка, как её ни укрась,<br>Душа стремится в край, где родилась.",
+            "Не обижай людей, коль хочешь долго жить,<br>Старайся добрым словом сердце оживить.",
+            "Тот, кто богат душой, не знает нищеты,<br>В терпенье и труде — залог твоей мечты.",
+            "Что пользы в том, что ты владыка всей земли,<br>Коль годы жизни прахом утегли?"
+        ];
+
+        let rubaiIndex = 0;
+        function changeRubai() {
+            const container = document.getElementById('rubai-display');
+            const text = document.getElementById('rubai-text');
+            container.style.opacity = '0';
+            setTimeout(() => {
+                rubaiIndex = (rubaiIndex + 1) % rubais.length;
+                text.innerHTML = rubais[rubaiIndex];
+                container.style.opacity = '1';
+            }, 500);
+        }
+    </script>
+
+    <style>
+        .animate-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+    </style>
+</body>
+</html>
